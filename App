@@ -1,0 +1,118 @@
+import './App.css';
+
+import Fecha from './componentes/ComponenteFecha';
+import Datos from './componentes/ComponenteDato';
+import React, { useState, useEffect } from 'react';
+import ComponenteForm from './componentes/componenteFomulario';
+import EdadPerro from './componentes/añosperro';
+import RickyMortyTable from './componentes/RickyMorty';
+import Pulsador from './componentes/ComponenteContador';
+import PokemonSearch from './ComponentwPokemon';
+import Login from './componentes/Login';
+
+function App() {
+   
+
+  const [operaciones, setOperacion] = useState([])
+  function calcular(event){
+    event.preventDefault();
+    const edadH = parseInt(event.target.valor1.value, 10)
+    const edadP = (edadH) * 7
+    const nuevo = {
+      resultado: edadP,
+      valor1: edadH
+    }
+    setOperacion([nuevo,...operaciones])
+    event.target.valor1.value='';
+  }
+  const [datos, setDatos] = useState({nombre: '', materia:''})
+  const [isAgeModuleEnabled, setAgeModuleEnabled] = useState (false);
+  const [isDateModuleEnabled, setDateModuleEnabled] = useState (false);
+  const [isFormModuleEnabled, setFormModuleEnabled] = useState (false);
+  const [isPokemonModuleEnabled, setPokemonModuleEnabled] = useState (false);
+  const [isRickModuleEnabled, setRickModuleEnabled] = useState (false);
+  const [isContModuleEnabled, setContModuleEnabled] = useState (false);
+  const [isLogiModuleEnabled, setLoginModuleEnabled] = useState (false);
+  
+  const toggleAgeModule=()=>{
+    setAgeModuleEnabled (!isAgeModuleEnabled);
+  };
+  const toggleDateModule=()=>{
+    setDateModuleEnabled (!isDateModuleEnabled);
+  };
+  const toggleFormModule = () => {
+    setFormModuleEnabled (!isFormModuleEnabled);
+  };
+
+  const handleFormSubmit = (data)=>{
+    setDatos(data);
+  };
+
+  const toggleRickModule = () => {
+    setRickModuleEnabled (!isRickModuleEnabled);
+  };
+
+  const toggleContkModule = () => {
+    setContModuleEnabled (!isContModuleEnabled);
+  };
+  
+  const togglePokemonModule = () => {
+    setPokemonModuleEnabled (!isPokemonModuleEnabled);
+  };
+
+  const toggleLoginModule = () => {
+    setLoginModuleEnabled (!isLogiModuleEnabled);
+  };
+
+  return(
+  
+    <header className="App-header">
+
+    <div>
+      <h1>Hola esta es mi primera práctica en React</h1>
+      
+      <button className="custom-button" onClick={toggleAgeModule}>
+        {isAgeModuleEnabled ? 'Deshabilitar Módulo Edad Canina' : 'Habilitar Módulo Edad Canina'}
+      </button>
+      {isAgeModuleEnabled && <><form onSubmit={calcular}>
+        <p>Ingrese su edad: <input type="text" name="valor1" /></p>
+        <input type="submit" value="Calcular" />
+      </form><EdadPerro resultados={operaciones} /></>}
+      
+      <button className="custom-button" onClick={toggleDateModule}>
+        {isDateModuleEnabled ? 'Deshabilitar Módulo Fecha' : 'Habilitar Módulo Fecha'}
+      </button>
+      {isDateModuleEnabled && <Fecha/>}
+
+      <button className="custom-button" onClick={toggleFormModule}>
+        {isFormModuleEnabled ? 'Deshabilitar Módulo Formulario' : 'Habilitar Módulo Formulario'}
+      </button>
+      {isFormModuleEnabled && <><ComponenteForm onFormSubmit={handleFormSubmit} /><Datos nombre={datos.nombre} materia={datos.materia} /></>}
+
+      <button className="custom-button" onClick={toggleContkModule}>
+        {isContModuleEnabled ? 'Deshabilitar Módulo Contador' : 'Habilitar Módulo Contador'}
+      </button>
+      {isContModuleEnabled && <Pulsador />}
+
+      <button className="custom-button" onClick={togglePokemonModule}>
+        {isPokemonModuleEnabled ? 'Deshabilitar Módulo PokeApi' : 'Habilitar Módulo PokeApi'}
+      </button>
+      {isPokemonModuleEnabled && <PokemonSearch />}
+
+      <button className="custom-button" onClick={toggleRickModule}>
+        {isRickModuleEnabled ? 'Deshabilitar Módulo RickAndMorty' : 'Habilitar Módulo RickAndMorty'}
+      </button>
+      {isRickModuleEnabled && <RickyMortyTable />}
+
+      <button className="custom-button" onClick={toggleLoginModule}>
+        {isLogiModuleEnabled ? 'Deshabilitar Módulo Login' : 'Habilitar Módulo Login'}
+      </button>
+      {isLogiModuleEnabled && <Login />}
+
+      
+</div>
+</header>
+  )
+}
+
+export default App;
